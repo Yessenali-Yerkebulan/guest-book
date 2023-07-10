@@ -6,7 +6,7 @@ $user = 'root';
 $pass = '';
 $charset = 'utf8';
 
-$dsn = "mysql:host=$host;db=$db;charset=$charset";
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -15,4 +15,4 @@ $options = [
 
 $pdo = new PDO($dsn, $user, $pass, $options);
 
-var_dump($pdo);
+//var_dump($pdo);
