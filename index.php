@@ -17,7 +17,6 @@ if(isset($_POST['auth'])){
     die;
 }
 $messages = get_messages();
-debug($messages);
 
 
 if(isset($_POST['add'])){
