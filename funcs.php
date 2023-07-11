@@ -34,3 +34,35 @@ function registration(): bool
         return false;
     }
 }
+
+function login(): bool
+{
+    global $pdo;
+    $login = !empty($_POST['login']) ? trim($_POST['login']) : '';
+    $pass = !empty($_POST['pass']) ? trim($_POST['pass']) : '';
+
+    if(empty($login) || empty($pass))
+    {
+        $_SESSION['errors'] = ' Поля логин/пароль обязательны';
+        return false;
+    }
+
+    $res = $pdo->prepare("SELECT * FROM users WHERE login = ?");
+    $res->execute([$login]);
+    if(!$user = $res->fetch()){
+        $_SESSION['errors'] = 'Логин/пароль введены неверно';
+        return false;
+    }
+
+
+    if(!password_verify($pass, $user['pass'])){
+        $_SESSION['errors'] = 'Логин/пароль введены неверно';
+        return false;
+    }else{
+        $_SESSION['success'] = 'Вы успешно авторизовались';
+        $_SESSION['user']['name'] = $user['login'];
+        $_SESSION['user']['id'] = $user['id'];
+        return true;
+    }
+}
+
